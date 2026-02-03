@@ -119,7 +119,35 @@ function renderTodos() {
 
   checkEmptyState();
 }
+function toggleTodo(id){
+    todo=todo.map((todo)=>{
+        if(todo.id===id){
+            return{...todo,completed:!todo.completed};
 
+        }
+        return todo ;
+    });
+    savetodo();
+    renderTodos();
+}
+
+function deleteTodo(id){
+    todos=todos.filter((todo)=>todo.id!==id);
+    savetodo();
+    renderTodos();
+    
+};
+function loadTodos(){
+   const storedTodos=localStorage.getItem("todos");
+   if(storedTodos)todo=storedTodos=JSON.parse(storedTodos);
+   renderTodos();
+};
+
+filters.forEach((filter)=>{
+    filter.addEventListener("click",()=>{
+        SetActiveFilter(filter.getAttribute("data-filter"));
+    });
+});
 
 
 
