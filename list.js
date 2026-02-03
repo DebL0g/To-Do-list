@@ -68,85 +68,106 @@ function filtertodos() {
     }
 }
 function renderTodos() {
-  todosList.innerHTML = "";
+    todosList.innerHTML = "";
 
-  const filteredTodos = filterTodos(currentFilter);
+    const filteredTodos = filterTodos(currentFilter);
 
-  filteredTodos.forEach((todo) => {
-    
-    const todoItem = document.createElement("li");
-    todoItem.classList.add("to-do-item");
-    if (todo.completed) todoItem.classList.add("completed");
+    filteredTodos.forEach((todo) => {
 
-  
-    const checkboxContainer = document.createElement("label");
-    checkboxContainer.classList.add("checkbox-cont");
+        const todoItem = document.createElement("li");
+        todoItem.classList.add("to-do-item");
+        if (todo.completed) todoItem.classList.add("completed");
 
-  
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("checkbox");
-    checkbox.checked = todo.completed;
-    checkbox.addEventListener("change", () => toggleTodo(todo.id));
 
-   
-    const checkmark = document.createElement("span");
-    checkmark.classList.add("checkmark");
+        const checkboxContainer = document.createElement("label");
+        checkboxContainer.classList.add("checkbox-cont");
 
-    
-    checkboxContainer.appendChild(checkbox);
-    checkboxContainer.appendChild(checkmark);
 
-  
-    const todoText = document.createElement("span");
-    todoText.classList.add("to-do-text");
-    todoText.textContent = todo.text;
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.classList.add("checkbox");
+        checkbox.checked = todo.completed;
+        checkbox.addEventListener("change", () => toggleTodo(todo.id));
 
-   
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("deletebt");
-    deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
-    deleteBtn.addEventListener("click", () => deleteTodo(todo.id));
 
-    
-    todoItem.appendChild(checkboxContainer);
-    todoItem.appendChild(todoText);
-    todoItem.appendChild(deleteBtn);
+        const checkmark = document.createElement("span");
+        checkmark.classList.add("checkmark");
 
-   
-    todosList.appendChild(todoItem);
-  });
 
-  checkEmptyState();
+        checkboxContainer.appendChild(checkbox);
+        checkboxContainer.appendChild(checkmark);
+
+
+        const todoText = document.createElement("span");
+        todoText.classList.add("to-do-text");
+        todoText.textContent = todo.text;
+
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("deletebt");
+        deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+        deleteBtn.addEventListener("click", () => deleteTodo(todo.id));
+
+
+        todoItem.appendChild(checkboxContainer);
+        todoItem.appendChild(todoText);
+        todoItem.appendChild(deleteBtn);
+
+
+        todosList.appendChild(todoItem);
+    });
+
+    checkEmptyState();
 }
-function toggleTodo(id){
-    todo=todo.map((todo)=>{
-        if(todo.id===id){
-            return{...todo,completed:!todo.completed};
+function toggleTodo(id) {
+    todo = todo.map((todo) => {
+        if (todo.id === id) {
+            return { ...todo, completed: !todo.completed };
 
         }
-        return todo ;
+        return todo;
     });
     savetodo();
     renderTodos();
 }
 
-function deleteTodo(id){
-    todos=todos.filter((todo)=>todo.id!==id);
+function deleteTodo(id) {
+    todos = todos.filter((todo) => todo.id !== id);
     savetodo();
     renderTodos();
-    
+
 };
-function loadTodos(){
-   const storedTodos=localStorage.getItem("todos");
-   if(storedTodos)todo=storedTodos=JSON.parse(storedTodos);
-   renderTodos();
+function loadTodos() {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) todo = storedTodos = JSON.parse(storedTodos);
+    renderTodos();
 };
 
-filters.forEach((filter)=>{
-    filter.addEventListener("click",()=>{
+filters.forEach((filter) => {
+    filter.addEventListener("click", () => {
         SetActiveFilter(filter.getAttribute("data-filter"));
     });
+});
+
+function setActiveFilter(filter) {
+    currentFilter = filter;
+
+    filters.forEach((item) => {
+        if (item.getAttribute("data-filter") === filter) {
+            item.classList.add("active");
+        } else {
+            item.classList.remove("active");
+        }
+    });
+
+    renderTodos();
+}
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    loadTodos();
+    updateItemsCount();
+    checkEmptyState();
 });
 
 
