@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>To-Do List</title>
   <link rel="stylesheet" href="style.css">
@@ -7,6 +8,7 @@
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
   <div class="app">
     <header class="header">
@@ -22,10 +24,18 @@
       </div>
       <div class="main-content">
         <main class="task-contain">
-          <ul>
-            <li>Task1</li>
-            
-            
+          <ul id="todos-list">
+            <!--<li class="to-do-item">
+              <label class="checkbox-cont">
+                <input type="checkbox" class="checkbox" />
+                <span class="checkmark"></span>
+              </label>
+              <span class="to-do-text">Miku</span>
+              <button class="deletebt"><i class="fas fa-times"></i></button>
+
+            </li>-->
+
+
           </ul>
         </main>
         <div class="empty-sate hidden">
@@ -43,4 +53,5 @@
   </div>
   <script src="list.js"></script>
 </body>
+
 </html>
